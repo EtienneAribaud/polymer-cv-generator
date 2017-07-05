@@ -1,9 +1,6 @@
-# Polymer App Toolbox - Starter Kit
+# Polymer CV Generator
 
-This template is a starting point for building apps using a drawer-based
-layout. The layout is provided by `app-layout` elements.
-
-This template, along with the `polymer-cli` toolchain, also demonstrates use
+This template, along with the `polymer-cli` toolchain, demonstrates use
 of the "PRPL pattern" This pattern allows fast first delivery and interaction with
 the content at the initial route requested by the user, along with fast subsequent
 navigation by pre-caching the remaining components required by the app and
@@ -29,11 +26,6 @@ Second, install [Bower](https://bower.io/) using [npm](https://www.npmjs.com)
 
     npm install -g bower
 
-##### Initialize project from template
-
-    mkdir my-app
-    cd my-app
-    polymer init starter-kit
 
 ### Start the development server
 
