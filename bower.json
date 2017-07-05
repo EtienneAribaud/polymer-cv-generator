@@ -1,9 +1,8 @@
 {
-  "name": "polymer-starter-kit",
+  "name": "polymer-cv-generator",
   "authors": [
-    "The Polymer Authors"
+    "Etienne Aribaud"
   ],
-  "license": "https://polymer.github.io/LICENSE.txt",
   "dependencies": {
     "app-layout": "PolymerElements/app-layout#2.0-preview",
     "app-route": "PolymerElements/app-route#2.0-preview",

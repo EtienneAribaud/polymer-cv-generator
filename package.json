@@ -1,6 +1,5 @@
 {
-  "name": "polymer-starter-kit",
-  "license": "BSD-3-Clause",
+  "name": "polymer-cv-generator",
   "devDependencies": {
     "eslint": "^4.1.1",
     "eslint-config-google": "^0.8.0",
