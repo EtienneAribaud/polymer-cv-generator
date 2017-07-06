@@ -17,7 +17,7 @@
 <link rel="lazy-import" href="my-view3.html">
 <link rel="lazy-import" href="my-view404.html">
 
-<dom-module id="my-app">
+<dom-module id="cv-generator">
   <template>
     <style>
       :host {
@@ -101,10 +101,10 @@
   </template>
 
   <script>
-    class MyApp extends Polymer.Element {
+    class CvGenerator extends Polymer.Element {
 
       static get is() {
-        return 'my-app';
+        return 'cv-generator';
       }
 
       static get properties() {
@@ -166,6 +166,6 @@
       }
     }
 
-    window.customElements.define(MyApp.is, MyApp);
+    window.customElements.define(CvGenerator.is, CvGenerator);
   </script>
 </dom-module>
