@@ -4,6 +4,7 @@
   "fragments": [
     "src/my-formation.html",
     "src/my-experience.html",
+    "src/my-inputs.html",
     "src/my-error404.html"
   ],
   "sources": [

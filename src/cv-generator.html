@@ -8,12 +8,16 @@
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
 
 <link rel="lazy-import" href="my-formation.html">
 <link rel="lazy-import" href="my-experience.html">
+<link rel="lazy-import" href="my-inputs.html">
 <link rel="lazy-import" href="my-error404.html">
 
 <dom-module id="cv-generator">
@@ -71,6 +75,7 @@
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="formation" href="formation">Academic studies</a>
           <a name="experience" href="experience">Experiences</a>
+          <a name="inputs" href="inputs"><iron-icon icon="icons:add-circle"></iron-icon></a> 
         </iron-selector>
       </app-drawer>
 
@@ -91,6 +96,7 @@
             role="main">
           <my-formation name="formation"></my-formation>
           <my-experience name="experience"></my-experience>
+          <my-inputs name="inputs"></my-inputs>
           <my-error404 name="error404"></my-error404>
         </iron-pages>
       </app-header-layout>
