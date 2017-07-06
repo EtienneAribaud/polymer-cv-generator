@@ -3,7 +3,7 @@
   "shell": "src/cv-generator.html",
   "fragments": [
     "src/my-formation.html",
-    "src/my-view2.html",
+    "src/my-experience.html",
     "src/my-error404.html"
   ],
   "sources": [
