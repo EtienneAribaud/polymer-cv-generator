@@ -1,18 +1,22 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="my-icons.html">
 
 <link rel="lazy-import" href="my-formation.html">
@@ -70,7 +74,7 @@
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer">
-        <app-toolbar>Summary</app-toolbar>
+        <app-toolbar>[[user.firstName]] [[user.lastName]]</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="formation" href="formation">Academic studies</a>
           <a name="experience" href="experience">Experiences</a>
@@ -101,10 +105,17 @@
     </app-drawer-layout>
 
     <paper-dialog id="modalInputs" modal>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <div class="buttons">
-        <paper-button dialog-confirm autofocus>Tap to close</paper-button>
-      </div>
+      <iron-form id="userInfo">
+        <form action="/foo" method="get">
+          <paper-input name="firstName" label="Firstname" required auto-validate></paper-input>
+          <paper-input name="lastName" label="Lastname" required auto-validate></paper-input>
+          <paper-checkbox name="read" required>I have completed all fields</paper-checkbox>
+          <paper-button on-tap="_delayedSubmit" disabled id="userSubmit">
+            <paper-spinner id="spinner" hidden></paper-spinner>Submit</paper-button>
+          <paper-button on-tap="_userFormReset">Reset</paper-button>
+        </form>
+      </iron-form>
+       <paper-button dialog-confirm autofocus>Tap to close</paper-button>
     </paper-dialog>
 
   </template>
@@ -126,6 +137,11 @@
           rootPattern: String,
           routeData: Object,
           subroute: String,
+          user: {
+            type: Object,
+            notify: true
+          },
+          userForm: Object
         };
       }
 
@@ -141,6 +157,28 @@
         // Get root pattern for app-route, for more info about `rootPath` see:
         // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
         this.rootPattern = (new URL(this.rootPath)).pathname;
+
+        this.user = this._parseUser();
+
+        this.addEventListener('iron-form-submit', function(event) {
+          this.$.spinner.active = false;
+          this.$.spinner.hidden = true;
+          this.$.userSubmit.disabled = false;
+          localStorage.setItem('user', JSON.stringify(event.detail));
+        }.bind(this));
+
+        this.addEventListener('change', function(event) {
+          // Validate the entire form to see if we should enable the `Submit` button.
+          this.$.userSubmit.disabled = !this.$.userInfo.validate();
+        }.bind(this));
+
+      }
+
+      _delayedSubmit(event) {
+        this.$.spinner.active = true;
+        this.$.spinner.hidden = false;
+        this.$.userSubmit.disabled = true;
+        this.$.userInfo.submit();
       }
 
       _routePageChanged(page) {
@@ -177,6 +215,16 @@
       toogleModal() {
         this.$.modalInputs.open();
       }
+
+      _userFormReset() {
+        this.userForm = this.shadowRoot.querySelector('#userInfo');
+        this.userForm.reset();
+      }
+
+      _parseUser() {
+        return JSON.parse(localStorage.getItem('user')) || [];
+      }
+
     }
 
     window.customElements.define(CvGenerator.is, CvGenerator);
