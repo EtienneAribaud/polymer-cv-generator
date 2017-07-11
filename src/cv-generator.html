@@ -188,9 +188,7 @@
         this.$.spinner.active = true;
         this.$.spinner.hidden = false;
         this.$.userSubmit.disabled = true;
-        setTimeout(function() {
-          this.$.userInfo.submit();
-        }, 1000);
+        this.$.userInfo.submit();
       }
 
       _routePageChanged(page) {
