@@ -17,6 +17,7 @@
 <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/vaadin-date-picker/vaadin-date-picker.html">
 <link rel="import" href="my-icons.html">
 
 <link rel="lazy-import" href="my-formation.html">
@@ -62,6 +63,14 @@
         color: black;
         font-weight: bold;
       }
+
+      vaadin-date-picker {
+        margin-bottom: 20px;
+      }
+
+      paper-dialog {
+        width: 768px;
+      }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -105,17 +114,18 @@
     </app-drawer-layout>
 
     <paper-dialog id="modalInputs" modal>
+    <iron-icon icon="icons:close" dialog-confirm autofocus style="color: #757575"></iron-icon>
       <iron-form id="userInfo">
         <form action="/foo" method="get">
           <paper-input name="firstName" label="Firstname" required auto-validate></paper-input>
           <paper-input name="lastName" label="Lastname" required auto-validate></paper-input>
-          <paper-checkbox name="read" required>I have completed all fields</paper-checkbox>
-          <paper-button on-tap="_delayedSubmit" disabled id="userSubmit">
-            <paper-spinner id="spinner" hidden></paper-spinner>Submit</paper-button>
+          <vaadin-date-picker name="DOB" label="Date of birth"></vaadin-date-picker>
+          <paper-checkbox name="read" required>All fields completed</paper-checkbox>
+          <paper-button on-tap="_delayedSubmit" disabled id="userSubmit">Submit</paper-button>
           <paper-button on-tap="_userFormReset">Reset</paper-button>
+          <paper-spinner id="spinner" hidden></paper-spinner>
         </form>
       </iron-form>
-       <paper-button dialog-confirm autofocus>Tap to close</paper-button>
     </paper-dialog>
 
   </template>
@@ -178,7 +188,9 @@
         this.$.spinner.active = true;
         this.$.spinner.hidden = false;
         this.$.userSubmit.disabled = true;
-        this.$.userInfo.submit();
+        setTimeout(function() {
+          this.$.userInfo.submit();
+        }, 1000);
       }
 
       _routePageChanged(page) {

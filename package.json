@@ -10,6 +10,7 @@
     "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
     "test": "polymer test",
     "serve": "polymer serve --open",
+    "reset": "rm -rf bower_components && bower i && polymer serve --open",
     "serve:build": "polymer serve build/bundled --open"
   }
 }
